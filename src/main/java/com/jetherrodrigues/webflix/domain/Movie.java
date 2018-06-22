@@ -27,7 +27,7 @@ public class Movie implements Serializable {
 	@JsonInclude(Include.NON_NULL)
 	private String description;
 	@JsonInclude(Include.NON_NULL)
-	private String publishIn;
+	private int yearOfpublication;
 	@JsonInclude(Include.NON_NULL)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime created;
@@ -36,13 +36,24 @@ public class Movie implements Serializable {
 	private List<Image> images;
 	@DBRef
 	@JsonInclude(Include.NON_NULL)
-	private List<Category> category; 
+	private List<Category> categories; 
 		
 	public Movie() {
 		this.id = UUID.randomUUID().toString();
 		this.created = LocalDateTime.now();
 	}
 	
+	public Movie(String name, String description, int yearOfpublication, List<Image> images, List<Category> categories) {
+		this.id = UUID.randomUUID().toString();
+		this.created = LocalDateTime.now();
+		
+		this.name = name;
+		this.description = description;
+		this.yearOfpublication = yearOfpublication;
+		this.images = images;
+		this.categories = categories;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -67,12 +78,12 @@ public class Movie implements Serializable {
 		this.description = description;
 	}
 
-	public String getPublishIn() {
-		return publishIn;
+	public int getPublishIn() {
+		return yearOfpublication;
 	}
 
-	public void setPublishIn(String publishIn) {
-		this.publishIn = publishIn;
+	public void setPublishIn(int yearOfpublication) {
+		this.yearOfpublication = yearOfpublication;
 	}
 
 	public LocalDateTime getCreated() {
@@ -92,11 +103,11 @@ public class Movie implements Serializable {
 	}
 
 	public List<Category> getCategory() {
-		return category;
+		return categories;
 	}
 
-	public void setCategory(List<Category> category) {
-		this.category = category;
+	public void setCategory(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	@Override

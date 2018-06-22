@@ -31,6 +31,12 @@ public class Image implements Serializable {
 		this.created = LocalDateTime.now();
 	}
 
+	public Image(String url) {
+		this.id = UUID.randomUUID().toString();
+		this.created = LocalDateTime.now();
+		this.url = url;
+	}
+
 	public String getId() {
 		return id;
 	}

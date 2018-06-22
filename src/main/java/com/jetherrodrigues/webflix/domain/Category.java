@@ -31,6 +31,12 @@ public class Category implements Serializable {
 		this.created = LocalDateTime.now();
 	}
 
+	public Category(String name) {
+		this.id = UUID.randomUUID().toString();
+		this.created = LocalDateTime.now();
+		this.name = name;
+	}
+
 	public String getId() {
 		return id;
 	}

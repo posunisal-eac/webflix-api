@@ -1,5 +1,7 @@
 package com.jetherrodrigues.webflix.resource;
 
+import static com.jetherrodrigues.webflix.util.ApiVersionUtil.*;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -11,16 +13,15 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.jetherrodrigues.webflix.domain.Movie;
+import com.jetherrodrigues.webflix.domain.Image;
 import com.jetherrodrigues.webflix.exceptions.WebflixMovieNotFound;
-import com.jetherrodrigues.webflix.service.MovieService;
-import static com.jetherrodrigues.webflix.util.ApiVersionUtil.*;
+import com.jetherrodrigues.webflix.service.ImageService;
 
 @RestController
 @RequestMapping(value={
-		REST_APP + VERSION_V1 + MOVIE
+		REST_APP + VERSION_V1 + IMAGE
 })
-public class MovieResource implements Serializable {
+public class ImageResource implements Serializable {
 
 	/**
 	 * 
@@ -28,33 +29,33 @@ public class MovieResource implements Serializable {
 	private static final long serialVersionUID = -2731366882357556547L;
 	
 	@Autowired
-	private MovieService movieService;
+	private ImageService imageService;
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<Movie>> getAll() {
+	public ResponseEntity<List<Image>> getAll() {
 		return ResponseEntity.status(HttpStatus.OK)
 				.cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
-				.body(this.movieService.findAll());
+				.body(this.imageService.findAll());
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<Movie> getMovieById(@PathVariable(name="id") String id) throws WebflixMovieNotFound {
-		Movie movie = this.movieService.findById(id);
+	public ResponseEntity<Image> getById(@PathVariable(name="id") String id) throws WebflixMovieNotFound {
+		Image image = this.imageService.findById(id);
 		
-		if(movie == null) throw new WebflixMovieNotFound("There is no image with this id!");
+		if(image == null) throw new WebflixMovieNotFound("There is no image with this id!");
 		
 		return ResponseEntity.status(HttpStatus.OK)
 				.cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
-				.body(movie);
+				.body(image);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> saveMovie(@Valid @RequestBody Movie movie) {
-		movie = this.movieService.save(movie);
+	public ResponseEntity<Void> save(@Valid @RequestBody Image image) {
+		image = this.imageService.save(image);
 		return ResponseEntity
 				.created(ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
-				.buildAndExpand(movie.getId())
+				.buildAndExpand(image.getId())
 				.toUri()).build();
 	}
 }

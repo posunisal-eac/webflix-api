@@ -13,4 +13,5 @@ public class ApiVersionUtil {
 	public final static String MOVIE = "movie";
 	public final static String CATEGORY = "category";
 	public final static String IMAGE = "image";
+	public final static String USER = "user";
 }

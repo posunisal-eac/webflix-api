@@ -8,10 +8,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebConfig extends WebMvcConfigurerAdapter{
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {		
+		registry.addMapping("/**")
+			.allowedMethods("GET", "POST", "PUT", "DELETE")
+			.allowedOrigins("*")
+			.allowedHeaders("*");
+	}
+}
+
+
+/*
+@Configuration
+public class WebConfig extends WebMvcConfigurerAdapter{
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {		
 		registry.addMapping("/**") 
 			.allowedOrigins("*") 
 			.allowedMethods("GET", "POST", "PATCH", "DELETE", "PUT", "OPTIONS") 
         	.allowedHeaders("X-Requested-With,Content-Type,Accept,Origin");
 	}
 }
-
+*/
